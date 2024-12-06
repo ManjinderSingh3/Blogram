@@ -7,6 +7,7 @@ import { withAccelerate } from "@prisma/extension-accelerate"; // We need this D
 const app = new Hono<{
   Bindings: {
     DATABASE_URL: string;
+    JWT_SECRET: string;
   };
 }>();
 
