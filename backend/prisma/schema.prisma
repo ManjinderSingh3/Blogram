@@ -14,13 +14,13 @@ datasource db {
 // model is same as a table in PRISMA world
 model User {
   id String @id @default(uuid())
-  email String @unique
   name String?
+  username String @unique
   password String
-  posts Post[]
+  blogs Blog[]
 }
 
-model Post {
+model Blog {
   id String @id @default(uuid())
   title String
   content String
