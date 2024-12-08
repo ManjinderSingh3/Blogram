@@ -44,7 +44,24 @@ userRouter.post(`/signup`, async (c) => {
   }
 });
 
-userRouter.get(`/test`, (c) => {
-  console.log("Test route got hit");
-  return c.text("Hello testing");
+// Password condition
+userRouter.post(`/signin`, async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  const body = await c.req.json();
+  if (!body.username || !body.password) {
+    return c.json({ error: "Username and password both are required" }, 403);
+  }
+  const user = await prisma.user.findFirst({
+    where: {
+      username: body.username,
+      password: body.password,
+    },
+  });
+  if (!user) {
+    return c.json({ error: "Invalid username or password" }, 403);
+  }
+  const jwtToken = await sign({ id: user.id }, c.env.JWT_SECRET);
+  return c.json({ JWT: jwtToken });
 });
