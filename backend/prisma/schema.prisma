@@ -11,7 +11,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model is same as a table in PRISMA world
+// In PRISMA world, model is an interchanging word of a table  
 model User {
   id String @id @default(uuid())
   name String?

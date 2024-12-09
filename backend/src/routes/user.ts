@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { decode, sign, verify } from "hono/jwt";
+//import bcrypt from "bcrypt";
 
 export const userRouter = new Hono<{
   Bindings: {
@@ -17,11 +18,11 @@ userRouter.post(`/signup`, async (c) => {
 
   // IMPORTANT ! Whenever we're converting our data to JSON (like we did in line19), we await it because it returns a PROMISE
   const { username, password } = await c.req.json(); // Syntex to fetch body from request in Hono
-  const user = await prisma.user.findUnique({
+  const isExistingUser = await prisma.user.findUnique({
     where: { username },
   });
   try {
-    if (user) {
+    if (isExistingUser) {
       return c.json(
         {
           message: "User already exist",
@@ -29,6 +30,12 @@ userRouter.post(`/signup`, async (c) => {
         403
       );
     } else {
+      // Hash Password before saving it to database
+      console.log("here", username);
+      console.log("here", password);
+      const saltRounds = 10;
+      //const hashedPassword = await bcrypt.hash(password, saltRounds);
+      //console.log("Hashed password", hashedPassword);
       const user = await prisma.user.create({
         data: {
           username: username,
@@ -44,7 +51,6 @@ userRouter.post(`/signup`, async (c) => {
   }
 });
 
-// Password condition
 userRouter.post(`/signin`, async (c) => {
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
@@ -64,4 +70,18 @@ userRouter.post(`/signin`, async (c) => {
   }
   const jwtToken = await sign({ id: user.id }, c.env.JWT_SECRET);
   return c.json({ JWT: jwtToken });
+});
+
+userRouter.get(`/allusers`, async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  try {
+    const listOfUsers = await prisma.user.findMany();
+    return c.json(listOfUsers);
+  } catch (e) {
+    console.log(e);
+    return c.text("Error occured while fetching all users");
+  }
 });
