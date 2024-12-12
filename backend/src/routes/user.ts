@@ -16,7 +16,7 @@ userRouter.post(`/signup`, async (c) => {
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 
-  // IMPORTANT ! Whenever we're converting our data to JSON (like we did in line19), we await it because it returns a PROMISE
+  // IMPORTANT ! Whenever we're converting our data to JSON we await it because json() is an asynchronous function. Without await, TypeScript assumes we're working directly with the PROMISE
   const { username, password } = await c.req.json(); // Syntex to fetch body from request in Hono
   const isExistingUser = await prisma.user.findUnique({
     where: { username },
@@ -31,11 +31,7 @@ userRouter.post(`/signup`, async (c) => {
       );
     } else {
       // Hash Password before saving it to database
-      console.log("here", username);
-      console.log("here", password);
-      const saltRounds = 10;
       //const hashedPassword = await bcrypt.hash(password, saltRounds);
-      //console.log("Hashed password", hashedPassword);
       const user = await prisma.user.create({
         data: {
           username: username,
