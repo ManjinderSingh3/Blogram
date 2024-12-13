@@ -10,31 +10,37 @@ export const blogRouter = new Hono<{
   };
   Variables: {
     userId: string;
+    prisma: PrismaClient;
   };
 }>();
 
 blogRouter.use(`/*`, async (c, next) => {
-  const authHeader = c.req.header("authorization") || " ";
+  // Anytime a request comes to blogRouter, initiaze PRISMA client here in middleware and seeting it up in Context.
+  console.log("11");
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  console.log("here2");
+  c.set("prisma", prisma as PrismaClient & typeof prisma);
+  const authHeader = c.req.header("authorization") || "";
   const token = authHeader.split(" ")[1];
   try {
     const payload = await verify(token, c.env.JWT_SECRET);
-    console.log("PAYLOAD ---> ", payload);
-    console.log(typeof payload.id);
     if (payload) {
       c.set("userId", payload.id as string);
       await next();
     } else {
-      return c.json({ Error: "You're not logged in" }, 403);
+      return c.json({ error: "You're not logged in" }, 403);
     }
   } catch (e) {
-    return c.json({ message: "You're not logged in" }, 403);
+    console.error("Error:",e);
+    return c.json({ error: "You're not logged in" }, 403);
   }
 });
 
+// CREATE BLOG
 blogRouter.post("/create-blog", async (c) => {
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
+  const prisma = c.get("prisma");
   try {
     const body = await c.req.json();
     const blog = await prisma.blog.create({
@@ -51,17 +57,18 @@ blogRouter.post("/create-blog", async (c) => {
       id: blog.id,
     });
   } catch (e) {
-    console.log(e);
-    return c.json({});
+    console.error("Error occured", e);
+    return c.json(
+      { error: "Unable to create blog. Please try again later" },
+      500
+    );
   }
 });
 
-// UPDATE
+// UPDATE BLOG
 blogRouter.put("/update-blog", async (c) => {
   const body = await c.req.json();
-  const prisma = new PrismaClient({
-    datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
+  const prisma = c.get("prisma");
   try {
     const updatedBlog = await prisma.blog.update({
       where: {
@@ -75,16 +82,45 @@ blogRouter.put("/update-blog", async (c) => {
     return c.json({ updatedBlog: updatedBlog });
   } catch (e) {
     console.error(e);
-    return c.json({
-      error: "Failed to update the blog. Pleasse try again later.",
-    });
+    return c.json(
+      {
+        error: "Failed to update the blog. Pleasse try again later.",
+      },
+      500
+    );
   }
 });
 
-// GET List of all blogs
-blogRouter.get(`/all-blogs`);
+// GET all the blogs. TODO - Add pagination
+blogRouter.get(`/all-blogs`, async (c) => {
+  try {
+    const prisma = c.get("prisma");
+    const blogs = await prisma.blog.findMany();
+    return c.json({ blogs });
+  } catch (e) {
+    console.error("Error : ", e);
+    return c.json({ error: "An Error occured while fetching blogs !" });
+  }
+});
 
-// GET a specific blog
-blogRouter.get(`/:id`, (c) => {
-  return c.text("Hello");
+// GET a Specific Blog
+blogRouter.get(`/:id`, async (c) => {
+  const prisma = c.get("prisma");
+  const body = await c.req.json();
+  try {
+    const blog = await prisma.blog.findFirst({
+      where: {
+        id: body.id,
+      },
+    });
+    return c.json({ blog });
+  } catch (e) {
+    console.error(e);
+    return c.json(
+      {
+        error: "An error occured while fetching blog. Please try again later",
+      },
+      500
+    );
+  }
 });
