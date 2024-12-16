@@ -1,6 +1,6 @@
 {
-  "name": "@blogram/common",
-  "version": "1.0.0",
+  "name": "@manjinder_dev/blogram-common",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "license": "MIT",
   "dependencies": {
