@@ -2,6 +2,10 @@ import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { verify } from "hono/jwt";
+import {
+  createBlogInput,
+  updateBlogInput,
+} from "@manjinder_dev/blogram-common";
 
 export const blogRouter = new Hono<{
   Bindings: {
@@ -16,11 +20,9 @@ export const blogRouter = new Hono<{
 
 blogRouter.use(`/*`, async (c, next) => {
   // Anytime a request comes to blogRouter, initiaze PRISMA client here in middleware and seeting it up in Context.
-  console.log("11");
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
-  console.log("here2");
   c.set("prisma", prisma as PrismaClient & typeof prisma);
   const authHeader = c.req.header("authorization") || "";
   const token = authHeader.split(" ")[1];
@@ -33,7 +35,7 @@ blogRouter.use(`/*`, async (c, next) => {
       return c.json({ error: "You're not logged in" }, 403);
     }
   } catch (e) {
-    console.error("Error:",e);
+    console.error("Error:", e);
     return c.json({ error: "You're not logged in" }, 403);
   }
 });
@@ -43,6 +45,24 @@ blogRouter.post("/create-blog", async (c) => {
   const prisma = c.get("prisma");
   try {
     const body = await c.req.json();
+    const { success } = createBlogInput.safeParse(body);
+    if (!success) {
+      return c.json({ error: "Invalid Inputs!" }, 411);
+    }
+    // EXISTING BLOG CHECK
+    const existingBlog = await prisma.blog.findFirst({
+      where: {
+        title: body.title,
+        content: body.content,
+        authorId: c.get("userId"), //This flag will ensure same user is not creating duplicate blog
+      },
+    });
+    if (existingBlog) {
+      return c.json({
+        error: "A blog with the same title and content already exists.",
+      });
+    }
+    
     const blog = await prisma.blog.create({
       data: {
         authorId: c.get("userId"),
@@ -68,6 +88,10 @@ blogRouter.post("/create-blog", async (c) => {
 // UPDATE BLOG
 blogRouter.put("/update-blog", async (c) => {
   const body = await c.req.json();
+  const { success } = updateBlogInput.safeParse(body);
+  if (!success) {
+    return c.json({ error: "Invalid Inputs !" });
+  }
   const prisma = c.get("prisma");
   try {
     const updatedBlog = await prisma.blog.update({
