@@ -1,11 +1,81 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shadcn-components/ui/button";
+import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
+import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
   return (
-    <div>
-      <Button>Text</Button>
-      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]">
-        <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-fuchsia-400 opacity-20 blur-[100px]"></div>
+    <div className="flex items-center justify-between py-4">
+      {/* 1. Website Icon  */}
+      <div></div>
+
+      {/* 2. Navbar items */}
+      <div className="flex items-center">
+        <NavigationMenuPrimitive.Root
+          delayDuration={0}
+          className="relative hidden lg:block"
+        >
+          <NavigationMenuPrimitive.List className="flex flex-row space-x-2 ">
+            <NavigationMenuPrimitive.Item>
+              <p
+                className={cn(
+                  "px-3 py-2 rounded-md hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black  "
+                )}
+              >
+                Categories
+              </p>
+            </NavigationMenuPrimitive.Item>
+
+            <NavigationMenuPrimitive.Item>
+              <p
+                className={cn(
+                  "px-3 py-2 rounded-md hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
+                )}
+              >
+                Categories
+              </p>
+            </NavigationMenuPrimitive.Item>
+
+            <NavigationMenuPrimitive.Item>
+              <p
+                className={cn(
+                  " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
+                )}
+              >
+                About
+              </p>
+            </NavigationMenuPrimitive.Item>
+
+            <NavigationMenuPrimitive.Item>
+              <p
+                className={cn(
+                  " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-100 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
+                )}
+              >
+                My Courses
+              </p>
+            </NavigationMenuPrimitive.Item>
+
+            <NavigationMenuPrimitive.Item>
+              <p
+                className={cn(
+                  " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-100 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
+                )}
+              >
+                Contact
+              </p>
+            </NavigationMenuPrimitive.Item>
+          </NavigationMenuPrimitive.List>
+          <NavigationMenuPrimitive.Viewport className="data-[state=closed]:animate-scale-out-content data-[state=open]:animate-scale-in-content absolute left-0 top-full flex w-[var(--radix-navigation-menu-viewport-width)] origin-[top_center] justify-start rounded-lg border border-gray-200 bg-white shadow-lg" />
+        </NavigationMenuPrimitive.Root>
+      </div>
+
+      {/* 3. Signup-Signin */}
+      <div className="flex items-center space-x-4">
+        <Link to="/sign-in">
+          <Button variant="outline">Signin</Button>
+        </Link>
+        <Button className="hover:bg-white hover:text-black">Signup</Button>
       </div>
     </div>
   );
