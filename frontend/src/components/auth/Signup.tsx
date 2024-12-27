@@ -14,28 +14,30 @@ export const Signup = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-2xl">Sign In</CardTitle>
-        <CardDescription>Sign in to your Blogram account</CardDescription>
+        <CardTitle className="text-2xl">Create your Account</CardTitle>
+        <CardDescription>
+          Please enter your email below to create account
+        </CardDescription>
       </CardHeader>
       <div className="px-6">
         <Label htmlFor="email">Email</Label>
         <Input id="email" type="email" placeholder="example@gmail.com" />
       </div>
       <div className="px-6 mt-2">
-        <Label>Password</Label>
-        <Input id="password" type="password" />
+        <Label htmlFor="password">Password</Label>
+        <Input id="password" type="password"></Input>
       </div>
       <div className="px-6">
-        <Button className="w-full mt-4 mb-4">Sign Up</Button>
+        <Button className="w-full mt-4">Create Account</Button>
       </div>
       <CardFooter>
-        <div className="text-sm text-muted-foreground">
-          <span className="mr-2">Don&apos;t have an account?</span>
+        <div className="mt-4 text-sm text-muted-foreground">
+          <span className="mr-2">Already have an account?</span>
           <Link
-            to="/sign-up"
-            className="text-primary underline-offset-4 hover:underline hover:font-bold "
+            to="/sign-in"
+            className="text-primary hover:underline underline-offset-4 hover:font-bold"
           >
-            Sign up
+            Sign in
           </Link>
         </div>
       </CardFooter>
