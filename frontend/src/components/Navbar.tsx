@@ -75,7 +75,9 @@ export const Navbar = () => {
         <Link to="/sign-in">
           <Button variant="outline">Signin</Button>
         </Link>
-        <Button className="hover:bg-white hover:text-black">Signup</Button>
+        <Link to="/sign-up">
+          <Button className="hover:bg-white hover:text-black">Signup</Button>
+        </Link>
       </div>
     </div>
   );
