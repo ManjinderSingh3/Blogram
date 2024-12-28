@@ -8,7 +8,19 @@ export const Navbar = () => {
   return (
     <div className="flex items-center justify-between py-4">
       {/* 1. Website Icon  */}
-      <div></div>
+      {/* <div className="">
+        <Link to="/">
+          <img className="sm:h-8   lg:h-10 rounded-md px-8"
+
+          src="/public/logo.png" />
+        </Link>
+      </div> */}
+
+      <div className="text-2xl font-bold">
+        <Link to="/">
+          <span className="text-fuchsia-500">B</span>logram
+        </Link>
+      </div>
 
       {/* 2. Navbar items */}
       <div className="flex items-center">
@@ -21,16 +33,6 @@ export const Navbar = () => {
               <p
                 className={cn(
                   "px-3 py-2 rounded-md hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black  "
-                )}
-              >
-                Categories
-              </p>
-            </NavigationMenuPrimitive.Item>
-
-            <NavigationMenuPrimitive.Item>
-              <p
-                className={cn(
-                  "px-3 py-2 rounded-md hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
                 )}
               >
                 Categories
