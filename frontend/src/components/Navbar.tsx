@@ -2,6 +2,7 @@ import { Button } from "@/shadcn-components/ui/button";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { ToggleThemes } from "./toggle-themes";
 
 export const Navbar = () => {
   return (
@@ -78,6 +79,7 @@ export const Navbar = () => {
         <Link to="/sign-up">
           <Button className="hover:bg-white hover:text-black">Signup</Button>
         </Link>
+        <ToggleThemes />
       </div>
     </div>
   );
