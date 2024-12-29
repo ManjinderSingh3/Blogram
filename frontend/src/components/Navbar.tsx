@@ -8,14 +8,6 @@ export const Navbar = () => {
   return (
     <div className="flex items-center justify-between py-4">
       {/* 1. Website Icon  */}
-      {/* <div className="">
-        <Link to="/">
-          <img className="sm:h-8   lg:h-10 rounded-md px-8"
-
-          src="/public/logo.png" />
-        </Link>
-      </div> */}
-
       <div className="text-2xl font-bold">
         <Link to="/">
           <span className="text-fuchsia-500">B</span>logram
