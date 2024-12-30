@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 export function NavbarMobile() {
   const [open, setOpen] = useState<boolean>(false);
   return (
-    <div className="sm:mx-0 flex items-center justify-between px-4">
-      <div className="lg:hidden text-2xl">
+    <div className="sm:mx-0 flex items-center justify-between py-4">
+      <div className="lg:hidden text-2xl font-bold">
         <Link to="/">
-          <span className="font-bold text-fuchsia-500">Blo</span>gram
+          <span className=" text-fuchsia-500">Blo</span>gram
         </Link>
       </div>
       <div className="justify-end">

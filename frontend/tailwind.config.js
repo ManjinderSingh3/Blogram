@@ -4,13 +4,11 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     container: {
-      center: {
-        DEFAULT: false,
-        lg: true,
-      },
+      center: true,
       padding: {
         DEFAULT: "1rem",
-        lg: "6rem",
+        lg: "4rem",
+        xl: "6rem",
       },
       screens: {
         sm: "480px",

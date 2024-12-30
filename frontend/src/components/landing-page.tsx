@@ -1,4 +1,4 @@
-import { Navbar } from "./Navbar";
+import { Navbar } from "./navbar";
 import { HeroSection } from "./hero-section";
 
 export const LandingPage = () => {
