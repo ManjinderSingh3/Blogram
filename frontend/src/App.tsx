@@ -1,9 +1,10 @@
 import { Signin } from "./components/auth/Signin";
 import { Signup } from "./components/auth/Signup";
-import { MovingBeam } from "./components/Moving-beam";
+import { MovingBeam } from "./components/moving-beam";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LandingPage } from "./components/landing-page";
 import { ThemeProvider } from "./shadcn-components/ui/theme-provider";
+import { NavbarMobile } from "./components/navbar-mobile";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/sign-up" element={<Signup />} />
             <Route path="/sign-in" element={<Signin />} />
             <Route path="/moving-beam" element={<MovingBeam />} />
+            <Route path="/mobile-navbar" element={<NavbarMobile />} />
           </Routes>
         </BrowserRouter>
       </div>

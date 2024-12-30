@@ -10,7 +10,7 @@ export const Navbar = () => {
       {/* 1. Website Icon  */}
       <div className="text-2xl font-bold">
         <Link to="/">
-          <span className="text-fuchsia-500">B</span>logram
+          <span className="text-fuchsia-500">Blo</span>gram
         </Link>
       </div>
 
@@ -27,7 +27,7 @@ export const Navbar = () => {
                   "px-3 py-2 rounded-md hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black  "
                 )}
               >
-                Categories
+                About Us
               </p>
             </NavigationMenuPrimitive.Item>
 
@@ -37,7 +37,7 @@ export const Navbar = () => {
                   " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
                 )}
               >
-                About
+                Write
               </p>
             </NavigationMenuPrimitive.Item>
 
@@ -47,7 +47,7 @@ export const Navbar = () => {
                   " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-100 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
                 )}
               >
-                My Courses
+                Membership
               </p>
             </NavigationMenuPrimitive.Item>
 
