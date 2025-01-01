@@ -1,13 +1,13 @@
-import { ChevronDown, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { LandingPage } from "./landing-page";
 
 export function NavbarMobile() {
   const [open, setOpen] = useState<boolean>(false);
-  const [openCourseCategories, setOpenCourseCategories] =
-    useState<boolean>(false);
   console.log("Value of open:", open);
+  console.log("Width of Window:", window.innerWidth);
   return (
     <div>
       <div className="sm:mx-0 flex items-center justify-between py-4">
@@ -32,32 +32,26 @@ export function NavbarMobile() {
           </button>
         </div>
       </div>
-      {open ? (
-        <ul className="grid divide-y divide-gray-200">
-          <li className="py-3">
-            <button
-              className="flex w-full justify-between"
-              onClick={() => setOpenCourseCategories(!openCourseCategories)}
-            >
-              <p className="font-semibold">Course Categories</p>
-              <ChevronDown
-                className={cn(
-                  "h-5 w-5 text-gray-500 transition-all",
-                  openCourseCategories && "rotate-180"
-                )}
-              />
-            </button>
-          </li>
-          <li>
-            <Link to="sign-in">Sign In</Link>
-          </li>
-          <li>
-            <Link to="sign-up">Signup</Link>
-          </li>
-        </ul>
-      ) : (
-        <></>
-      )}
+      <div className="lg:hidden">
+        {open && window.innerWidth < 1024 ? (
+          <ul className="grid divide-y divide-gray-200 lg:block">
+            <li>
+              <Link to="/">About Us</Link>
+            </li>
+            <li>
+              <Link to="/sign-in">Sign In</Link>
+            </li>
+            <li>
+              <Link to="/sign-up">Signup</Link>
+            </li>
+          </ul>
+        ) : (
+            <LandingPage />
+        )}
+      </div>
+      <div className="hidden lg:block">
+        <LandingPage />
+      </div>
     </div>
   );
 }

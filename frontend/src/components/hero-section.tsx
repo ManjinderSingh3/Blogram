@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 export const HeroSection = () => {
   return (
+    <div className="py-5">
     <section className="flex flex-col items-center justify-center text-center py-6 bg-gradient-to-b from-white to-gray-200 rounded-xl ">
       <div className="bg-gray-200 px-4 py-1 rounded-full mb-4">
         <span className="text-sm text-gray-600">Blogram is now live! </span>
@@ -25,5 +26,6 @@ export const HeroSection = () => {
         </button>
       </div>
     </section>
+    </div>
   );
 };
