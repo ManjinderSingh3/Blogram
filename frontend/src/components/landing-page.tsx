@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { Navbar } from "./navbar";
 import { NavbarMobile } from "./navbar-mobile";
 import { HeroSection } from "./hero-section";
+import { useRecoilValue } from "recoil";
+import { hamburgerAtom } from "@/store/atoms/hamburger";
 
 export const LandingPage = () => {
+  const openHamburger = useRecoilValue(hamburgerAtom);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
   // Dynamically check screen size
@@ -23,8 +26,19 @@ export const LandingPage = () => {
   return (
     <div>
       {/* Conditionally render Navbar or NavbarMobile */}
-      {isMobile ? <NavbarMobile /> : <Navbar />}
-      <HeroSection />
+      {isMobile && !openHamburger ? (
+        <>
+          <NavbarMobile />
+          <HeroSection />
+        </>
+      ) : isMobile && openHamburger ? (
+        <NavbarMobile />
+      ) : (
+        <>
+          <Navbar />
+          <HeroSection />
+        </>
+      )}
     </div>
   );
 };
