@@ -2,15 +2,12 @@ import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { LandingPage } from "./landing-page";
 
 export function NavbarMobile() {
   const [open, setOpen] = useState<boolean>(false);
-  console.log("Value of open:", open);
-  console.log("Width of Window:", window.innerWidth);
   return (
     <div>
-      <div className="sm:mx-0 flex items-center justify-between py-4">
+      <div className="flex items-center justify-between py-4 h-16">
         <div className="lg:hidden text-2xl font-bold">
           <Link to="/">
             <span className=" text-fuchsia-500">Blo</span>gram
@@ -25,32 +22,40 @@ export function NavbarMobile() {
             )}
           >
             {open ? (
+
               <X className="h-5 w-5 text-gray-600" />
+
             ) : (
               <Menu className="h-5 w-5 text-gray-600" />
             )}
           </button>
         </div>
       </div>
-      <div className="lg:hidden">
-        {open && window.innerWidth < 1024 ? (
-          <ul className="grid divide-y divide-gray-200 lg:block">
+      <div >
+        {open ? (
+          <ul className="h-[calc(100vh-64px)] px-2 grid divide-y space-y-3 divide-gray-300 font-semibold lg:block py-4">
             <li>
               <Link to="/">About Us</Link>
             </li>
-            <li>
+            <li className="pt-3">
+              <Link to="/">Write</Link>
+            </li>
+            <li className="pt-3">
+              <Link to="/">Membership</Link>
+            </li>
+            <li className="pt-3">
+              <Link to="/"> Contact</Link>
+            </li>
+            <li className="pt-3">
               <Link to="/sign-in">Sign In</Link>
             </li>
-            <li>
+            <li className="pt-3">
               <Link to="/sign-up">Signup</Link>
             </li>
           </ul>
         ) : (
-            <LandingPage />
+          <></>
         )}
-      </div>
-      <div className="hidden lg:block">
-        <LandingPage />
       </div>
     </div>
   );
