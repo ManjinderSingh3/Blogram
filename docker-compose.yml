@@ -1,8 +1,16 @@
 version: '3.8'
 services:
-  app:
+  frontend:
     build:
-    container_name: blogram-docker
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    container_name: blogram-frontend-docker
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    container_name: blogram-backend-docker
 
   db:
     image: postgres:alpine
