@@ -1,0 +1,7 @@
+name = "backend"
+main = "src/index.ts"
+compatibility_date = "2025-01-16"
+
+[vars]
+DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGc- Note:this variable will hold Connection pooling URL which our backend application will use"
+JWT_SECRET="your-JWT-secret"
