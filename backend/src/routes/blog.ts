@@ -18,6 +18,7 @@ export const blogRouter = new Hono<{
   };
 }>();
 
+// MIDDLEWARE
 blogRouter.use(`/*`, async (c, next) => {
   // Anytime a request comes to blogRouter, initiaze PRISMA client here in middleware and seeting it up in Context.
   const prisma = new PrismaClient({
@@ -40,7 +41,7 @@ blogRouter.use(`/*`, async (c, next) => {
   }
 });
 
-// CREATE BLOG
+// 1- CREATE BLOG
 blogRouter.post("/create-blog", async (c) => {
   const prisma = c.get("prisma");
   try {
@@ -85,7 +86,7 @@ blogRouter.post("/create-blog", async (c) => {
   }
 });
 
-// UPDATE BLOG
+// 2- UPDATE BLOG
 blogRouter.put("/update-blog", async (c) => {
   const body = await c.req.json();
   const { success } = updateBlogInput.safeParse(body);
@@ -115,7 +116,7 @@ blogRouter.put("/update-blog", async (c) => {
   }
 });
 
-// GET all the blogs. TODO - Add pagination
+// 3- GET all the blogs. TODO - Add pagination
 blogRouter.get(`/all-blogs`, async (c) => {
   try {
     const prisma = c.get("prisma");
@@ -127,7 +128,7 @@ blogRouter.get(`/all-blogs`, async (c) => {
   }
 });
 
-// GET a Specific Blog
+// 4- GET a Specific Blog
 blogRouter.get(`/:id`, async (c) => {
   const prisma = c.get("prisma");
   const body = await c.req.json();

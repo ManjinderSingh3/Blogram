@@ -9,8 +9,12 @@ import { Button } from "@/shadcn-components/ui/button";
 import { Label } from "@/shadcn-components/ui/label";
 import { Input } from "@/shadcn-components/ui/input";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useState } from "react";
 
 export const Signup = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <div className="flex flex-col min-h-screen py-4">
       <div className="text-2xl font-bold">
@@ -28,14 +32,41 @@ export const Signup = () => {
           </CardHeader>
           <div className="px-6">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="example@gmail.com" />
+            <Input
+              id="email"
+              type="email"
+              placeholder="example@gmail.com"
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            />
           </div>
           <div className="px-6 mt-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" type="password"></Input>
+            <Input
+              id="password"
+              type="password"
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            ></Input>
           </div>
           <div className="px-6">
-            <Button className="w-full mt-4">Create Account</Button>
+            <Button
+              className="w-full mt-4"
+              onClick={async () => {
+                const response = await axios.post(
+                  `http://localhost:8787/api/user/signup`,
+                  {
+                    username,
+                    password,
+                  }
+                );
+                localStorage.setItem("token", response.data.token);
+              }}
+            >
+              Create Account
+            </Button>
           </div>
           <CardFooter>
             <div className="mt-4 text-sm text-muted-foreground">

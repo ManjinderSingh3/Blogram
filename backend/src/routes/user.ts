@@ -12,12 +12,15 @@ export const userRouter = new Hono<{
 }>();
 
 userRouter.post(`/signup`, async (c) => {
+  console.log("Reached Backend route");
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
 
   // IMPORTANT ! Whenever we're converting our data to JSON we await it because json() is an asynchronous function. Without await, TypeScript assumes we're working directly with the PROMISE
+  console.log("Here");
   const body = await c.req.json(); // Syntex to fetch body from request in Hono
+  console.log("Body:", body);
   const { success } = signupInput.safeParse(body);
   if (!success) {
     return c.json({ error: "Inputs are incorrect" }, 411);
@@ -34,10 +37,8 @@ userRouter.post(`/signup`, async (c) => {
         403
       );
     } else {
-      console.log("Here");
-      // Hashing Password before saving it to database
+      // Hashing Password
       const hashedPassword = await hashPassword(body.password);
-      console.log("Here1");
       const user = await prisma.user.create({
         data: {
           username: body.username,
@@ -93,7 +94,7 @@ async function hashPassword(password: string): Promise<string> {
     false,
     ["deriveKey"]
   );
-  console.log("Hash0");
+
   // Derive the key using PBKDF2
   const derivedKey = await crypto.subtle.deriveKey(
     {
@@ -107,13 +108,10 @@ async function hashPassword(password: string): Promise<string> {
     true,
     ["sign"]
   );
-  console.log("Hash1");
-  console.log(derivedKey);
+
   // Export the key as raw data (hashed password)
   const hashedBuffer = await crypto.subtle.exportKey("raw", derivedKey);
-  console.log("Hash2");
   // Convert the hashed buffer to a string (Base64 or Hex encoding)
   const hashArray = Array.from(new Uint8Array(hashedBuffer));
-  console.log("Hash3");
   return btoa(String.fromCharCode(...hashArray));
 }
