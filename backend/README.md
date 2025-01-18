@@ -1,10 +1,21 @@
-## Functionality 
+
+## Backend Functionality 
 
 ### Routes
-#### USER Routes
+#### 1. USER Routes
+    a. Signup
+    b. Signin
+    c. Signout
+    d. Me
+
+    Authentication is handled using
+    a. JWT + local storage of browser
+    b. Cookies
+
+#### 2. BLOG Routes
 
 
-## Command to run backend module locally
+## Commands to run backend module locally
 ```
 yarn install
 yarn dev
