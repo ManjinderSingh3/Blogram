@@ -3,13 +3,12 @@ import { withAccelerate } from "@prisma/extension-accelerate";
 import { Hono } from "hono";
 import { decode, sign, verify } from "hono/jwt";
 import { signupInput, signinInput } from "@manjinder_dev/blogram-common";
-//import bcrypt from "bcrypt";
 
 export const userRouter = new Hono<{
   Bindings: {
     DATABASE_URL: string;
     JWT_SECRET: string;
-  },
+  };
 }>();
 
 userRouter.post(`/signup`, async (c) => {
@@ -35,11 +34,14 @@ userRouter.post(`/signup`, async (c) => {
         403
       );
     } else {
-      // TODO : Hash Password before saving it to database
+      console.log("Here");
+      // Hashing Password before saving it to database
+      const hashedPassword = await hashPassword(body.password);
+      console.log("Here1");
       const user = await prisma.user.create({
         data: {
           username: body.username,
-          password: body.password,
+          password: hashedPassword,
         },
       });
       const jwtToken = await sign({ id: user.id }, c.env.JWT_SECRET);
@@ -75,3 +77,43 @@ userRouter.post(`/signin`, async (c) => {
   const jwtToken = await sign({ id: user.id }, c.env.JWT_SECRET);
   return c.json({ JWT: jwtToken });
 });
+
+// ------ FUNCION to HASH Password -------
+async function hashPassword(password: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const passwordBuffer = encoder.encode(password);
+
+  // Generate a salt for the password
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  // Import the key (PBKDF2 algorithm)
+  const key = await crypto.subtle.importKey(
+    "raw",
+    salt,
+    { name: "PBKDF2" },
+    false,
+    ["deriveKey"]
+  );
+  console.log("Hash0");
+  // Derive the key using PBKDF2
+  const derivedKey = await crypto.subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt: salt,
+      iterations: 100000, // Higher number of iterations for security
+      hash: "SHA-256", // Use SHA-256 for hashing
+    },
+    key,
+    { name: "HMAC", hash: "SHA-256", length: 256 }, // HMAC with SHA-256
+    true,
+    ["sign"]
+  );
+  console.log("Hash1");
+  console.log(derivedKey);
+  // Export the key as raw data (hashed password)
+  const hashedBuffer = await crypto.subtle.exportKey("raw", derivedKey);
+  console.log("Hash2");
+  // Convert the hashed buffer to a string (Base64 or Hex encoding)
+  const hashArray = Array.from(new Uint8Array(hashedBuffer));
+  console.log("Hash3");
+  return btoa(String.fromCharCode(...hashArray));
+}
