@@ -18,9 +18,7 @@ userRouter.post(`/signup`, async (c) => {
   }).$extends(withAccelerate());
 
   // IMPORTANT ! Whenever we're converting our data to JSON we await it because json() is an asynchronous function. Without await, TypeScript assumes we're working directly with the PROMISE
-  console.log("Here");
   const body = await c.req.json(); // Syntex to fetch body from request in Hono
-  console.log("Body:", body);
   const { success } = signupInput.safeParse(body);
   if (!success) {
     return c.json({ error: "Inputs are incorrect" }, 411);
@@ -79,7 +77,7 @@ userRouter.post(`/signin`, async (c) => {
   return c.json({ JWT: jwtToken });
 });
 
-// ------ FUNCION to HASH Password -------
+// ------ FUNCTION to HASH Password -------
 async function hashPassword(password: string): Promise<string> {
   const encoder = new TextEncoder();
   const passwordBuffer = encoder.encode(password);

@@ -11,6 +11,7 @@ import { Input } from "@/shadcn-components/ui/input";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import { BACKEND_URL } from "@/config";
 
 export const Signup = () => {
   const [username, setUsername] = useState("");
@@ -56,7 +57,7 @@ export const Signup = () => {
               className="w-full mt-4"
               onClick={async () => {
                 const response = await axios.post(
-                  `http://localhost:8787/api/user/signup`,
+                  `${BACKEND_URL}/api/user/signup`,
                   {
                     username,
                     password,
