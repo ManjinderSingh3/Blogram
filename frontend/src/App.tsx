@@ -1,5 +1,6 @@
 import { Signin } from "./components/auth/Signin";
 import { Signup } from "./components/auth/Signup";
+import { Signout } from "./components/auth/Signout";
 import { MovingBeam } from "./components/moving-beam";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LandingPage } from "./components/landing-page";
@@ -20,6 +21,7 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/sign-up" element={<Signup />} />
               <Route path="/sign-in" element={<Signin />} />
+              <Route path="/sign-out" element={<Signout />} />
               <Route path="/moving-beam" element={<MovingBeam />} />
               <Route path="/mobile-navbar" element={<NavbarMobile />} />
             </Routes>

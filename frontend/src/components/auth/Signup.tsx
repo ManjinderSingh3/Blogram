@@ -8,14 +8,16 @@ import {
 import { Button } from "@/shadcn-components/ui/button";
 import { Label } from "@/shadcn-components/ui/label";
 import { Input } from "@/shadcn-components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import { BACKEND_URL } from "@/config";
 
 export const Signup = () => {
+  //TODO: Handle server side errors using React Hook Form
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col min-h-screen py-4">
       <div className="text-2xl font-bold">
@@ -63,7 +65,10 @@ export const Signup = () => {
                     password,
                   }
                 );
-                localStorage.setItem("token", response.data.token);
+                // Method 1 : Store JWT token in browser's local storage
+                localStorage.setItem("token", response.data.JWT_Token);
+                // Method 2 : Cookies
+                navigate("/");
               }}
             >
               Create Account

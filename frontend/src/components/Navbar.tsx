@@ -74,6 +74,9 @@ export const Navbar = () => {
           <Link to="/sign-up">
             <Button className="hover:bg-white hover:text-black">Signup</Button>
           </Link>
+          <Link to="/sign-out">
+            <Button>Signout</Button>
+          </Link>
           <ToggleThemes />
         </div>
       </div>

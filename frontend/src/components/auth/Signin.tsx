@@ -8,14 +8,16 @@ import {
 import { Button } from "@/shadcn-components/ui/button";
 import { Label } from "@/shadcn-components/ui/label";
 import { Input } from "@/shadcn-components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { BACKEND_URL } from "@/config";
 
 export const Signin = () => {
+  //TODO Handle Server side errors using React Hook Form
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col min-h-screen py-4">
       <div className="text-2xl font-bold">
@@ -53,11 +55,18 @@ export const Signin = () => {
             />
           </div>
           <div className="px-6">
-            <Button className="w-full mt-4" onClick={async ()=>{
-              const response = await axios.post(`${BACKEND_URL}/api/user/signin`,{
-                username,password
-              })
-            }}>Sign In</Button>
+            <Button
+              className="w-full mt-4"
+              onClick={async () => {
+                await axios.post(`${BACKEND_URL}/api/user/signin`, {
+                  username,
+                  password,
+                });
+                navigate("/");
+              }}
+            >
+              Sign In
+            </Button>
           </div>
           <CardFooter>
             <div className="mt-4 text-sm text-muted-foreground">
