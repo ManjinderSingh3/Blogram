@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavbarMobile } from "./navbar-mobile";
 import { HeroSection } from "./hero-section";
-import { Navbar } from "./navbar";
+import { Navbar } from "@/components/Navbar";
 import { useRecoilValue } from "recoil";
 import { hamburgerAtom } from "@/store/atoms/hamburger";
 

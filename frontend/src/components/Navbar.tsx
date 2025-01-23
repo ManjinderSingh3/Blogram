@@ -66,7 +66,7 @@ export const Navbar = () => {
           </NavigationMenuPrimitive.Root>
         </div>
 
-        {/* 3. Signup-Signin */}
+        {/* 3. Signup-Signin-Signout Buttons */}
         <div className="flex items-center space-x-4">
           <Link to="/sign-in">
             <Button variant="outline">Signin</Button>
