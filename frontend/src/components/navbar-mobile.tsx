@@ -1,13 +1,11 @@
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { hamburgerAtom } from "@/store/atoms/hamburger";
 
 export function NavbarMobile() {
   const [openHamburger, setOpenHamburger] = useRecoilState(hamburgerAtom);
-  const [open, setOpen] = useState<boolean>(false);
   return (
     <div>
       <div className="flex items-center justify-between py-4 h-16">
