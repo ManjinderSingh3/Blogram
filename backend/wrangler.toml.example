@@ -1,0 +1,9 @@
+name = "backend"
+main = "src/index.ts"
+compatibility_date = "2024-12-04"
+compatibility_flags = [ "nodejs_compat" ]
+external = [ "mock-aws-s3", "aws-sdk", "nock" ]
+
+[vars]
+DATABASE_URL="connection-pool-url"
+JWT_SECRET="your-jwt-secret"

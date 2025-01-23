@@ -15,6 +15,7 @@ import { BACKEND_URL } from "@/config";
 
 export const Signup = () => {
   //TODO: Handle server side errors using React Hook Form
+  console.log(BACKEND_URL);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ export const Signup = () => {
               className="w-full mt-4"
               onClick={async () => {
                 const response = await axios.post(
-                  `${BACKEND_URL}/api/user/signup`,
+                  `${BACKEND_URL}/api/v1/user/signup`,
                   {
                     username,
                     password,
