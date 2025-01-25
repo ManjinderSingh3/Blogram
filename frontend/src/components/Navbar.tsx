@@ -1,8 +1,8 @@
-import { Button } from "@/shadcn-components/ui/button";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { ToggleThemes } from "./toggle-themes";
+import { SignupAndSigninButtons } from "./auth/SignupAndSigninButtons";
 
 export const Navbar = () => {
   return (
@@ -38,7 +38,13 @@ export const Navbar = () => {
                     " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
                   )}
                 >
-                  Write
+                  Blog
+                  {/* 
+                  TODO:
+                  Menu should open :
+                  1- Create-your-own blog
+                  2- Ask AI to create Blog
+                  */}
                 </p>
               </NavigationMenuPrimitive.Item>
 
@@ -62,21 +68,12 @@ export const Navbar = () => {
                 </p>
               </NavigationMenuPrimitive.Item>
             </NavigationMenuPrimitive.List>
-            <NavigationMenuPrimitive.Viewport className="data-[state=closed]:animate-scale-out-content data-[state=open]:animate-scale-in-content absolute left-0 top-full flex w-[var(--radix-navigation-menu-viewport-width)] origin-[top_center] justify-start rounded-lg border border-gray-200 bg-white shadow-lg" />
           </NavigationMenuPrimitive.Root>
         </div>
 
         {/* 3. Signup-Signin-Signout Buttons */}
-        <div className="flex items-center space-x-4">
-          <Link to="/sign-in">
-            <Button variant="outline">Signin</Button>
-          </Link>
-          <Link to="/sign-up">
-            <Button className="hover:bg-white hover:text-black">Signup</Button>
-          </Link>
-          <Link to="/sign-out">
-            <Button>Signout</Button>
-          </Link>
+        <div className="flex items-center space-x-3">
+          <SignupAndSigninButtons />
           <ToggleThemes />
         </div>
       </div>
