@@ -9,10 +9,36 @@ export const userRouter = new Hono<{
     DATABASE_URL: string;
     JWT_SECRET: string;
   };
+  Variables: {
+    userId: string;
+  };
 }>();
 
+userRouter.get(`/me`, async (c) => {
+  const authHeader = c.req.header("authorization") || "";
+  const token = authHeader.split(" ")[1];
+
+  const payload = await verify(token, c.env.JWT_SECRET);
+  if (payload) {
+    c.set("userId", payload.id as string);
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: c.get("userId"),
+      },
+    });
+
+    if (user) {
+      return c.json({ email: user.username });
+    }
+  }
+  return c.json({ error: "You're not logged in" }, 411);
+});
+
 userRouter.post(`/signup`, async (c) => {
-  console.log("Reached Backend route");
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());

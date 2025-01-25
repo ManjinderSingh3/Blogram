@@ -2,13 +2,17 @@ import axios from "axios";
 import { useEffect } from "react";
 import { userState } from "@/store/atoms/user";
 import { useSetRecoilState } from "recoil";
+import { BACKEND_URL } from "@/config";
 
 export const InitUser = () => {
   const setUser = useSetRecoilState(userState);
   const init = async () => {
     try {
-      const response = await axios.get(`/api/v1/user/me`);
-      console.log("Me endpoint response : ", response);
+      const response = await axios.get(`http://localhost:8787/api/v1/user/me`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
       if (response) {
         setUser({
           isLoading: false,
@@ -30,6 +34,5 @@ export const InitUser = () => {
   useEffect(() => {
     init();
   }, []);
-  return;
-  <></>;
+  return <></>;
 };

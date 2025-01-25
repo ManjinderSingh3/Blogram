@@ -4,6 +4,7 @@ import { HeroSection } from "./hero-section";
 import { Navbar } from "@/components/Navbar";
 import { useRecoilValue } from "recoil";
 import { hamburgerAtom } from "@/store/atoms/hamburger";
+import { InitUser } from "./init-user";
 
 export const LandingPage = () => {
   const openHamburger = useRecoilValue(hamburgerAtom);
@@ -25,6 +26,7 @@ export const LandingPage = () => {
 
   return (
     <div>
+      <InitUser />
       {/* Conditionally render Navbar or NavbarMobile */}
       {isMobile && !openHamburger ? (
         <>

@@ -13,9 +13,9 @@ A modern blogging platform designed to empower writers and readers. Built with c
 
 **LANGUAGE:** Typescript
 
-**DEPLOYMENT**
-- Frontend : CDN
-- Backend : 
+**DEPLOYMENT**̃
+- Frontend : Vercel
+- Backend : Cloudflare Worker
 
 ## Database Setup
 
