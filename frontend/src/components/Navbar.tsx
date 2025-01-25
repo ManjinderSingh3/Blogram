@@ -23,17 +23,19 @@ export const Navbar = () => {
           >
             <NavigationMenuPrimitive.List className="flex flex-row space-x-2 ">
               <NavigationMenuPrimitive.Item>
-                <p
+                <Link
+                  to="/about-us"
                   className={cn(
-                    "px-3 py-2 rounded-md hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black  "
+                    "flex space-x-2 rounded-md px-3 py-2  hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black  "
                   )}
                 >
                   About Us
-                </p>
+                </Link>
               </NavigationMenuPrimitive.Item>
 
               <NavigationMenuPrimitive.Item>
-                <p
+                <Link
+                  to="/"
                   className={cn(
                     " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
                   )}
@@ -45,27 +47,29 @@ export const Navbar = () => {
                   1- Create-your-own blog
                   2- Ask AI to create Blog
                   */}
-                </p>
+                </Link>
               </NavigationMenuPrimitive.Item>
 
               <NavigationMenuPrimitive.Item>
-                <p
+                <Link
+                  to="/"
                   className={cn(
-                    " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-100 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
+                    " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black"
                   )}
                 >
                   Membership
-                </p>
+                </Link>
               </NavigationMenuPrimitive.Item>
 
               <NavigationMenuPrimitive.Item>
-                <p
+                <Link
+                  to="/"
                   className={cn(
-                    " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-100 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
+                    " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
                   )}
                 >
                   Contact
-                </p>
+                </Link>
               </NavigationMenuPrimitive.Item>
             </NavigationMenuPrimitive.List>
           </NavigationMenuPrimitive.Root>
