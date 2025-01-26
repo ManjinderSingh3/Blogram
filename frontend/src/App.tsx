@@ -5,7 +5,7 @@ import { MovingBeam } from "./components/moving-beam";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LandingPage } from "./components/landing-page";
 import { ThemeProvider } from "./shadcn-components/ui/theme-provider";
-import { NavbarMobile } from "./components/navbar-mobile";
+import { NavbarMobile } from "./components/navbar/navbar-mobile";
 import { RecoilRoot } from "recoil";
 
 function App() {

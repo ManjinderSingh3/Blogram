@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { hamburgerAtom } from "@/store/atoms/hamburger";
-import { ToggleThemes } from "./toggle-themes";
+import { ToggleThemes } from "../toggle-themes";
 import { Button } from "@/shadcn-components/ui/button";
 
 export function NavbarMobile() {

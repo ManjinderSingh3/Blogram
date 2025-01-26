@@ -1,11 +1,11 @@
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import { ToggleThemes } from "./toggle-themes";
-import { SignupAndSigninButtons } from "./auth/SignupAndSigninButtons";
-import { SignoutButton } from "./auth/SignoutButton";
+import { ToggleThemes } from "../toggle-themes";
+import { SignupAndSigninButtons } from "../auth/SignupAndSigninButtons";
 import { userEmailState } from "@/store/selectors/userEmail";
 import { useRecoilValue } from "recoil";
+import { UserProfileBanner } from "../auth/user-profile-banner";
 
 export const Navbar = () => {
   const userEmail = useRecoilValue(userEmailState);
@@ -79,10 +79,15 @@ export const Navbar = () => {
           </NavigationMenuPrimitive.Root>
         </div>
 
-        {/* 3. Signup-Signin-Signout Buttons */}
+        {/* 3. Signup-Signin-ProfileBanner*/}
         <div className="flex items-center space-x-3">
-          {/* TODO : If user has signed in or signed up show their profile banner and signout buttons*/}
-          {userEmail ? <SignoutButton /> : <SignupAndSigninButtons />}
+          {userEmail ? (
+            <>
+              <UserProfileBanner />
+            </>
+          ) : (
+            <SignupAndSigninButtons />
+          )}
           <ToggleThemes />
         </div>
       </div>
