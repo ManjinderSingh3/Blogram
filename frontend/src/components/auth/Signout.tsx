@@ -48,9 +48,6 @@ export const Signout = () => {
           </CardContent>
         </Card>
       </div>
-      <div>
-        Bottom
-      </div>
     </div>
   );
 };

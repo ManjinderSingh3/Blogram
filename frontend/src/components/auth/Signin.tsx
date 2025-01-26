@@ -58,10 +58,21 @@ export const Signin = () => {
             <Button
               className="w-full mt-4"
               onClick={async () => {
-                await axios.post(`${BACKEND_URL}/api/user/signin`, {
-                  username,
-                  password,
-                });
+                const response = await axios.post(
+                  `${BACKEND_URL}/api/user/signin`,
+                  {
+                    username,
+                    password,
+                  }
+                );
+                // const response = await axios.post(
+                //   `http://localhost:8787/api/v1/user/signin`,
+                //   {
+                //     username,
+                //     password,
+                //   }
+                // );
+                localStorage.setItem("token", response.data.JWT_Token);
                 navigate("/");
               }}
             >

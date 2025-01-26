@@ -3,8 +3,12 @@ import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { ToggleThemes } from "./toggle-themes";
 import { SignupAndSigninButtons } from "./auth/SignupAndSigninButtons";
+import { SignoutButton } from "./auth/SignoutButton";
+import { userEmailState } from "@/store/selectors/userEmail";
+import { useRecoilValue } from "recoil";
 
 export const Navbar = () => {
+  const userEmail = useRecoilValue(userEmailState);
   return (
     <div>
       <div className="flex items-center justify-between py-4">
@@ -77,7 +81,8 @@ export const Navbar = () => {
 
         {/* 3. Signup-Signin-Signout Buttons */}
         <div className="flex items-center space-x-3">
-          <SignupAndSigninButtons />
+          {/* TODO : If user has signed in or signed up show their profile banner and signout buttons*/}
+          {userEmail ? <SignoutButton /> : <SignupAndSigninButtons />}
           <ToggleThemes />
         </div>
       </div>

@@ -8,15 +8,21 @@ export const InitUser = () => {
   const setUser = useSetRecoilState(userState);
   const init = async () => {
     try {
-      const response = await axios.get(`http://localhost:8787/api/v1/user/me`, {
+      const response = await axios.get(`${BACKEND_URL}/api/v1/user/me`, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("token"),
         },
       });
-      if (response) {
+      //   const response = await axios.get(`http://localhost:8787/api/v1/user/me`, {
+      //     headers: {
+      //       Authorization: "Bearer " + localStorage.getItem("token"),
+      //     },
+      //   });
+      const email = response.data.email;
+      if (email) {
         setUser({
           isLoading: false,
-          userEmail: response.data.email,
+          userEmail: email,
         });
       } else {
         setUser({

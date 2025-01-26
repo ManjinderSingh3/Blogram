@@ -17,25 +17,24 @@ export const userRouter = new Hono<{
 userRouter.get(`/me`, async (c) => {
   const authHeader = c.req.header("authorization") || "";
   const token = authHeader.split(" ")[1];
-
-  const payload = await verify(token, c.env.JWT_SECRET);
-  if (payload) {
-    c.set("userId", payload.id as string);
-    const prisma = new PrismaClient({
-      datasourceUrl: c.env.DATABASE_URL,
-    }).$extends(withAccelerate());
-
-    const user = await prisma.user.findUnique({
-      where: {
-        id: c.get("userId"),
-      },
-    });
-
-    if (user) {
-      return c.json({ email: user.username });
+  if (token) {
+    const payload = await verify(token, c.env.JWT_SECRET);
+    if (payload) {
+      c.set("userId", payload.id as string);
+      const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL,
+      }).$extends(withAccelerate());
+      const user = await prisma.user.findUnique({
+        where: {
+          id: c.get("userId"),
+        },
+      });
+      if (user) {
+        return c.json({ email: user.username });
+      }
     }
   }
-  return c.json({ error: "You're not logged in" }, 411);
+  return c.json({ error: "You're not logged in" });
 });
 
 userRouter.post(`/signup`, async (c) => {
@@ -90,17 +89,22 @@ userRouter.post(`/signin`, async (c) => {
   if (!body.username || !body.password) {
     return c.json({ error: "Username and password both are required" }, 403);
   }
-  const user = await prisma.user.findFirst({
-    where: {
-      username: body.username,
-      password: body.password,
-    },
-  });
-  if (!user) {
-    return c.json({ error: "Invalid username or password" }, 403);
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        username: body.username,
+        password: body.password,
+      },
+    });
+    if (!user) {
+      return c.json({ error: "Invalid username or password" }, 403);
+    }
+    const jwtToken = await sign({ id: user.id }, c.env.JWT_SECRET);
+    return c.json({ JWT_Token: jwtToken });
+  } catch (e) {
+    console.log(e);
+    return c.text("Invalid", 411);
   }
-  const jwtToken = await sign({ id: user.id }, c.env.JWT_SECRET);
-  return c.json({ JWT: jwtToken });
 });
 
 // ------ FUNCTION to HASH Password -------
