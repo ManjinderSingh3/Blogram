@@ -59,7 +59,7 @@ export const Signin = () => {
               className="w-full mt-4"
               onClick={async () => {
                 const response = await axios.post(
-                  `${BACKEND_URL}/api/user/signin`,
+                  `${BACKEND_URL}/api/v1/user/signin`,
                   {
                     username,
                     password,
