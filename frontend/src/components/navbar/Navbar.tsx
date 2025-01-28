@@ -6,6 +6,7 @@ import { SignupAndSigninButtons } from "../auth/SignupAndSigninButtons";
 import { userEmailState } from "@/store/selectors/userEmail";
 import { useRecoilValue } from "recoil";
 import { UserProfileBanner } from "../auth/user-profile-banner";
+import { BlogsMenu } from "./navbar-blogs-menu";
 
 export const Navbar = () => {
   const userEmail = useRecoilValue(userEmailState);
@@ -30,7 +31,7 @@ export const Navbar = () => {
                 <Link
                   to="/about-us"
                   className={cn(
-                    "flex space-x-2 rounded-md px-3 py-2  hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black  "
+                    "flex space-x-2 rounded-md px-3 py-2  hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black"
                   )}
                 >
                   About Us
@@ -38,7 +39,7 @@ export const Navbar = () => {
               </NavigationMenuPrimitive.Item>
 
               <NavigationMenuPrimitive.Item>
-                <Link
+                {/* <Link
                   to="/"
                   className={cn(
                     " flex space-x-2 rounded-md px-3 py-2 hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black "
@@ -50,8 +51,9 @@ export const Navbar = () => {
                   Menu should open :
                   1- Create-your-own blog
                   2- Ask AI to create Blog
-                  */}
-                </Link>
+                  }
+                </Link> */}
+                <BlogsMenu />
               </NavigationMenuPrimitive.Item>
 
               <NavigationMenuPrimitive.Item>
