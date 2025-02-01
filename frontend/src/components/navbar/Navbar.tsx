@@ -14,9 +14,10 @@ export const Navbar = () => {
     <div>
       <div className="flex items-center justify-between py-4">
         {/* 1. Website Icon  */}
-        <div className="text-2xl font-bold">
+        <div className="text-3xl font-bold">
           <Link to="/">
-            <span className="text-fuchsia-500">Blo</span>gram
+            <span className="text-fuchsia-500">Blo</span>
+            <span className="text-neutral-800 dark:text-neutral-400">gram</span>
           </Link>
         </div>
 
@@ -31,7 +32,7 @@ export const Navbar = () => {
                 <Link
                   to="/about-us"
                   className={cn(
-                    "flex space-x-2 rounded-md px-3 py-2  hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black"
+                    "flex space-x-2 rounded-md px-3 py-2  hover:bg-gray-200 text-sm font-medium text-primary transition-colors ease-out hover:text-black dark:text-neutral-400"
                   )}
                 >
                   About Us
