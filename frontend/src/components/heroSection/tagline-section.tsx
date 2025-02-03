@@ -1,5 +1,6 @@
 import { FlipWords } from "./flip-words";
 import { Link } from "react-router-dom";
+import { TechStackIcons } from "./tech-stack-icons";
 
 export const TaglineSection = () => {
   const words = ["better", "cute", "beautiful", "modern"];
@@ -16,6 +17,9 @@ export const TaglineSection = () => {
         <Link to="/" className="text-gray-600 hover:underline text-sm">
           Read more →
         </Link>
+      </div>
+      <div>
+        <TechStackIcons />
       </div>
     </div>
   );
